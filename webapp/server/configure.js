@@ -1,7 +1,6 @@
 
-var connect = require('connect'),
-    path = require('path'),
-    // route = require('./routes'),
+var path = require('path'),
+    routes = require('./routes'),
     hdlbars = require('express3-handlebars'),
     bodyParser = require('body-parser'),
     logger = require('morgan'),
@@ -13,7 +12,6 @@ var connect = require('connect'),
 
 module.exports = function(app){
     // configuration code
-
     app.engine('handlebars', hdlbars.create({
         defaultLayout: 'main',
         layoutsDir: app.get('views') + '/layouts',
@@ -25,11 +23,7 @@ module.exports = function(app){
         uploadDir: path.join(__dirname, '../public/upload/temp')
     }));
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded( {
-        extended: true   
-        
-    }  
-    ));
+    app.use(bodyParser.urlencoded());
     app.use(methodOverride());
     app.use(cookieParser('some-secret-value-here'));
     app.use(app.router);
@@ -39,7 +33,7 @@ module.exports = function(app){
         app.use(errorHandler());
 
     }
-
+    routes.initialize(app);
     return app;
 
 };
