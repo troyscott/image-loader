@@ -2,7 +2,8 @@
 module.exports = {
 
     index: function(req, res) {
-        res.send('The image:index controller ' + req.params.image_id);
+        // pass the view name: image which is called image.handlebars
+        res.render('image');
     },
     create: function(req, res) {
         res.send('The image:create POST controller');
